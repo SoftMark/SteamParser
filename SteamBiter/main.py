@@ -1,6 +1,6 @@
 from item import Item
+from new_items import NewParserItems
 
 
-url = "https://steamcommunity.com/market/listings/730/Spectrum%20Case"
-Item(url).show_data()
+Item(NewParserItems().get_links()[0]).show_data()
 

@@ -15,11 +15,14 @@ class PageLoader:
     # Request
     @classmethod
     @careful
-    def get_html_from_url(cls, url):
+    def get_html_from_url(cls, url, _format="html"):
         page = requests.get(url)
         if page.status_code == 200:
             # print("Page loaded!")
-            return page.text
+            if _format == "html":
+                return page.text
+            elif _format == "json":
+                return page.json()
         else:
             # print("Page loading ERROR!")
             return None
