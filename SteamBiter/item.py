@@ -23,7 +23,7 @@ class Item:
         print("ORDERS FORSELL:", self.orders_qnt_forsell)
         print("MIN PRICE:", self.min_price_forsell)
         print("ORDERS BUYREQUESTS:", self.orders_qnt_buyrequests)
-        print("MAX PRICE:", self.min_price_buyrequests)
+        print("MIN PRICE:", self.min_price_buyrequests)
         print("------------------------------")
 
     @classmethod
