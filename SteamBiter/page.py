@@ -1,9 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from tool import careful
+from all_parser import HtmlParser
 import json
-
-from parser import HtmlParser
 
 
 class Page:

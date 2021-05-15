@@ -1,7 +1,7 @@
 from tool import careful
 from bs4 import BeautifulSoup
 from page import Page, PageLoader
-from parser import HtmlParser
+from all_parser import HtmlParser
 
 
 class Item:
