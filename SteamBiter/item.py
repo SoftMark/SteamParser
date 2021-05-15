@@ -10,16 +10,20 @@ class Item:
         self.page = Page(url)
         self.name = self.get_item_name(self.page)
         self.id = self.get_item_id(self.page)
-        self.orders_qnt = self.get_order_qnt(self.id)
-        self.min_price = self.get_order_min_price(self.id)
+        self.orders_qnt_forsell = self.get_order_qnt(self.id, "sell_order_summary")
+        self.min_price_forsell = self.get_order_min_price(self.id, "sell_order_summary")
+        self.orders_qnt_buyrequests = self.get_order_qnt(self.id, "buy_order_summary")
+        self.min_price_buyrequests = self.get_order_min_price(self.id, "buy_order_summary")
 
     def show_data(self):
         print("------------------------------")
         print("NAME:", self.name)
         print("URL:", self.url)
         print("ID:", self.id)
-        print("ORDERS:", self.orders_qnt)
-        print("MIN PRICE:", self.min_price)
+        print("ORDERS FORSELL:", self.orders_qnt_forsell)
+        print("MIN PRICE:", self.min_price_forsell)
+        print("ORDERS BUYREQUESTS:", self.orders_qnt_buyrequests)
+        print("MAX PRICE:", self.min_price_buyrequests)
         print("------------------------------")
 
     @classmethod
@@ -29,23 +33,23 @@ class Item:
         except: pass
 
     @classmethod
-    def get_item_data(cls, id):
+    def get_item_data(cls, id, _stat_trade):
         data_dict = PageLoader.get_item_data_page(id).dict
-        return BeautifulSoup(data_dict["sell_order_summary"], "html.parser")
+        return BeautifulSoup(data_dict[_stat_trade], "html.parser")
 
     @classmethod
-    def get_item_main_data(cls, id):
-        return cls.get_item_data(id).findAll("span", class_="market_commodity_orders_header_promote")
-
-    @classmethod
-    @careful
-    def get_order_qnt(cls, id):
-        return cls.get_item_main_data(id)[0].text
+    def get_item_main_data(cls, id, _stat_trade):
+        return cls.get_item_data(id, _stat_trade).findAll("span", class_="market_commodity_orders_header_promote")
 
     @classmethod
     @careful
-    def get_order_min_price(cls, id):
-        return cls.get_item_main_data(id)[1].text
+    def get_order_qnt(cls, id, _stat_trade):
+        return cls.get_item_main_data(id, _stat_trade)[0].text
+
+    @classmethod
+    @careful
+    def get_order_min_price(cls, id, _stat_trade):
+        return cls.get_item_main_data(id, _stat_trade)[1].text
 
     @classmethod
     @careful
