@@ -12,6 +12,7 @@ class Page:
             return PageLoader.get_dict_from_html(self.html)
         except:
             print("Cannot parse to json ERROR!!")
+            return None
 
 
 class PageLoader:
@@ -66,27 +67,3 @@ class PageParser:
     def get_item_name(cls, item):
         soup = BeautifulSoup(item.page.html, "html.parser")
         return soup.find("span", class_="market_listing_item_name").text
-
-
-class Item:
-    def __init__(self, url):
-        self.url = url
-        self.page = Page(url)
-        self.name = PageParser.get_item_name(self)
-        self.id = PageParser.get_id_from_html(self.page.html)
-        self.orders_qnt = PageParser.get_order_qnt(self.id)
-        self.min_price = PageParser.get_order_min_price(self.id)
-
-    def show_data(self):
-        print("------------------------------")
-        print("NAME:", self.name)
-        print("URL:", self.url)
-        print("ID:", self.id)
-        print("ORDERS:", self.orders_qnt)
-        print("MIN PRICE:", self.min_price)
-        print("------------------------------")
-
-
-url = "https://steamcommunity.com/market/listings/730/Spectrum%20Case"
-Item(url).show_data()
-
